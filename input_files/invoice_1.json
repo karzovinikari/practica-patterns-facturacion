@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "id": 1, "product_category": "computer", "price": 1000.0 },
+    { "id": 2, "product_category": "food_item", "price": 50.0 },
+    { "id": 3, "product_category": "imported_car", "price": 20000.0 }
+  ], 
+  "discount": "black_friday"
+}

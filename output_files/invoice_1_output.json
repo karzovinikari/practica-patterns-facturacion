@@ -1,0 +1,20 @@
+{
+    "subtotal": 21050.0,
+    "applied_discount": 6315.0,
+    "item_taxes": [
+        {
+            "id": 1,
+            "tax": 500.0
+        },
+        {
+            "id": 2,
+            "tax": 0.0
+        },
+        {
+            "id": 3,
+            "tax": 10000.0
+        }
+    ],
+    "total_taxes": 10500.0,
+    "final_total": 25235.0
+}
