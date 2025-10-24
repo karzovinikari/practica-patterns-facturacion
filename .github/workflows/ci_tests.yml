@@ -1,0 +1,37 @@
+name: CI Pipeline
+
+on:
+  push:
+    # Dispara el workflow en cualquier push a la rama principal (main)
+    branches: [ main ]
+  pull_request:
+    # Dispara el workflow cuando se crea un PR para fusionar con main
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    # El trabajo se ejecuta en el sistema operativo Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Obtener el código del repositorio
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. Configurar el entorno de Python (la versión 3.x más reciente)
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    # 3. (Opcional) Instalar dependencias 
+    # Aunque tu proyecto usa solo librerías estándar (unittest), es buena práctica dejar este paso
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # pip install -r requirements.txt  <-- Si tuvieras un archivo de requerimientos
+
+    # 4. Ejecutar los tests unitarios
+    # Usamos la ruta relativa donde creaste el archivo de tests
+    - name: Run unit tests
+      run: python -m unittest tests/test_invoice_processor.py
