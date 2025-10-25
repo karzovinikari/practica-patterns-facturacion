@@ -1,21 +1,26 @@
+# models.py (Ajustado para FastAPI/Pydantic)
+from pydantic import BaseModel, Field
+from typing import List
+
 # Item (Un producto en la factura)
-class Item:
-    def __init__(self, id, product_category, price):
-        self.id = id
-        self.product_category = product_category
-        self.price = price
+class Item(BaseModel): # <-- Herencia de BaseModel para validación
+    id: int
+    product_category: str
+    price: float
 
 # Factura (La entrada del sistema)
-class Invoice:
-    def __init__(self, items, discount_key):
-        self.items = items
-        self.discount_key = discount_key
+class Invoice(BaseModel): # <-- Herencia de BaseModel
+    items: List[Item]
+    discount_key: str = Field(alias="discount")
 
-# Salida (El resultado del cálculo)
-class InvoiceResult:
-    def __init__(self):
-        self.subtotal = 0.0
-        self.applied_discount = 0.0
-        self.item_taxes = []
-        self.total_taxes = 0.0
-        self.final_total = 0.0
+# Salida (El resultado del cálculo, adaptado para ser un diccionario en la API)
+class InvoiceResult(BaseModel):
+    subtotal: float = 0.0
+    applied_discount: float = 0.0
+    item_taxes: List[dict] = Field(default_factory=list) # Usar default_factory para listas
+    total_taxes: float = 0.0
+    final_total: float = 0.0
+
+# Si solo usas las clases puras en la lógica del procesador, asegúrate de
+# mantener la versión de __init__ en models.py, o manejar la conversión si heredas de BaseModel.
+# Por simplicidad, asumiremos que heredar de BaseModel no rompe el resto de tu código.
